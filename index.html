@@ -1,0 +1,1121 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>แบบฟอร์มขอใช้บริการ</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --brand-primary: #1f4f8f;
+            --brand-primary-dark: #183d6e;
+            --brand-accent: #f19a38;
+            --bg-soft: #eef4fb;
+            --text-main: #233044;
+            --card-shadow: 0 16px 36px rgba(14, 40, 79, 0.12);
+        }
+
+        body {
+            background: radial-gradient(circle at 10% 0%, #f7fbff 0%, #e8f0fb 45%, #dde9f8 100%);
+            font-family: 'Sarabun', sans-serif;
+            color: var(--text-main);
+            min-height: 100vh;
+            position: relative;
+        }
+
+        body::before,
+        body::after {
+            content: "";
+            position: fixed;
+            width: 260px;
+            height: 260px;
+            border-radius: 50%;
+            z-index: -1;
+            filter: blur(2px);
+            opacity: 0.35;
+        }
+
+        body::before {
+            top: -90px;
+            right: -80px;
+            background: linear-gradient(135deg, #ffe0bb, #f6b36a);
+        }
+
+        body::after {
+            left: -100px;
+            bottom: -100px;
+            background: linear-gradient(135deg, #cfe5ff, #8db9f2);
+        }
+
+        .main-shell {
+            max-width: 940px;
+        }
+
+        .welcome-banner {
+            background: linear-gradient(110deg, rgba(31, 79, 143, 0.95), rgba(43, 109, 191, 0.92));
+            color: #fff;
+            padding: 1rem 1.2rem;
+            border-radius: 14px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .card {
+            border: none;
+            border-radius: 14px;
+            box-shadow: var(--card-shadow);
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+        }
+
+        .card-header {
+            background: linear-gradient(180deg, #ffffff 0%, #f7faff 100%);
+            font-weight: bold;
+            font-size: 1.1rem;
+            padding: 1rem 1.25rem;
+            border-bottom: 1px solid #dce7f6;
+        }
+
+        .form-control,
+        .form-select,
+        textarea {
+            border-radius: 10px;
+            border: 1px solid #cfe0f4;
+        }
+
+        .form-control:focus,
+        .form-select:focus,
+        textarea:focus {
+            border-color: #6ea5e6;
+            box-shadow: 0 0 0 0.2rem rgba(72, 130, 200, 0.22);
+        }
+
+        .btn-save {
+            background: linear-gradient(135deg, var(--brand-primary), #2c6fc2);
+            color: white;
+            border: none;
+            border-radius: 10px;
+        }
+
+        .btn-save:hover {
+            background: linear-gradient(135deg, var(--brand-primary-dark), #255c9f);
+        }
+
+        .btn-save:disabled {
+            background: #9db4d1;
+            cursor: not-allowed;
+            opacity: 0.85;
+        }
+
+        .btn-back {
+            background: linear-gradient(135deg, var(--brand-accent), #de7f19);
+            color: white;
+            border: none;
+            border-radius: 10px;
+        }
+
+        .btn-back:hover {
+            background: linear-gradient(135deg, #d4822d, #be6a12);
+        }
+
+        .stepper-circle {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #2fa86f, #1f824d);
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 4px 12px rgba(32, 138, 88, 0.35);
+        }
+
+        .stepper-line {
+            flex-grow: 1;
+            height: 4px;
+            background: linear-gradient(90deg, #2ea468, #3fc882);
+            margin: 0 5px;
+            border-radius: 999px;
+        }
+
+        #legalSection {
+            background: #f4f9ff;
+            border: 1px solid #d8e6fa;
+        }
+
+        .entity-data-card {
+            border: 1px solid #cfe0f4;
+            border-left: 5px solid var(--brand-primary);
+            border-radius: 12px;
+            background: #fff;
+            padding: 0.95rem 1rem;
+        }
+
+        .entity-data-card h6 {
+            color: var(--brand-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .entity-director-list {
+            margin-bottom: 0.5rem;
+            padding-left: 1rem;
+        }
+
+        .idsp-panel {
+            background: linear-gradient(160deg, #e9f4ff 0%, #f8fcff 100%);
+            border: 1px solid #d2e7fd;
+        }
+
+        .doc-item {
+            cursor: pointer;
+            transition: transform 0.18s ease, box-shadow 0.18s ease;
+        }
+
+        .doc-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 24px rgba(44, 88, 142, 0.12);
+        }
+
+        #result-view,
+        #result-view1 {
+            border-radius: 12px;
+            border: 1px solid #dde9f8;
+        }
+
+        .file-list-wrapper {
+            border: 1px dashed #b3cbe8;
+            border-radius: 10px;
+            background: var(--bg-soft);
+            padding: 0.75rem;
+        }
+
+        .validation-panel {
+            margin-top: 0.9rem;
+            border: 1px solid #d6e4f6;
+            border-radius: 12px;
+            background: #ffffff;
+            padding: 0.9rem;
+        }
+
+        .validation-status {
+            margin-top: 0.75rem;
+            border-radius: 10px;
+            padding: 0.65rem 0.75rem;
+            font-weight: 600;
+        }
+
+        .status-pass {
+            background: #e8f8ef;
+            border: 1px solid #b8e6cc;
+            color: #18653d;
+        }
+
+        .status-fail {
+            background: #fff0f0;
+            border: 1px solid #f3c0c0;
+            color: #8a1f1f;
+        }
+
+        .status-pending {
+            background: #fff7e8;
+            border: 1px solid #ffe0ae;
+            color: #8a5b10;
+        }
+
+        .action-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0.75rem;
+        }
+
+        @media (min-width: 768px) {
+            .action-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .action-box {
+            border: 1px solid #dbe7f6;
+            border-radius: 10px;
+            background: #f8fbff;
+            padding: 0.75rem;
+        }
+
+        .director-list-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0.75rem;
+        }
+
+        .director-item {
+            border: 1px solid #dbe7f6;
+            border-radius: 10px;
+            background: #f8fbff;
+            padding: 0.75rem;
+        }
+
+        .director-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+            gap: 0.5rem;
+        }
+
+        .director-badge {
+            padding: 0.25rem 0.5rem;
+            border-radius: 999px;
+            font-size: 0.78rem;
+            font-weight: 700;
+        }
+
+        .director-badge-pass {
+            background: #dff4e8;
+            color: #18653d;
+        }
+
+        .director-badge-fail {
+            background: #ffe3e3;
+            color: #8a1f1f;
+        }
+
+        .director-badge-pending {
+            background: #fff3de;
+            color: #8a5b10;
+        }
+
+        .director-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .director-message {
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            color: #516176;
+        }
+    </style>
+</head>
+<body class="py-4">
+
+<div class="container main-shell">
+    <div class="mb-4">
+        <div class="welcome-banner">
+            <h4 class="fw-bold mb-1">สวัสดี คุณนพดล ซันกูล</h4>
+            <p class="mb-0 opacity-75">ระบบคำขอใช้งานอาคารสถานที่พร้อมติดตามสถานะการดำเนินงาน</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            ส่วนที่ 1 : ข้อมูลบุคคลผู้ขออนุญาต
+        </div>
+        <div class="card-body">
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label fw-semibold">ชื่อ-สกุล</label>
+                    <input type="text" class="form-control" id="applicantFullName" value="คุณ นพดล ซันกูล" disabled>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label fw-semibold">เลขประจำตัวประชาชน</label>
+                    <input type="text" class="form-control" value="1102100002977" disabled>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label fw-semibold">อีเมล</label>
+                    <input type="email" class="form-control" value="n.sunkul@gmail.com" disabled>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label fw-semibold">เบอร์โทรศัพท์</label>
+                    <input type="text" class="form-control" value="0867444102" disabled>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            ส่วนที่ 2 : รายละเอียดการขอใช้บริการ
+        </div>
+        <div class="card-body">
+            <p class="fw-bold mb-3">ชื่อบริการ: การขอใช้อาคารสถานที่</p>
+            
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div class="text-center">
+                    <div class="stepper-circle mx-auto">✓</div>
+                    <small class="d-block mt-1">ยื่นคำขอ</small>
+                </div>
+                <div class="stepper-line"></div>
+                <div class="text-center">
+                    <div class="stepper-circle mx-auto">✓</div>
+                    <small class="d-block mt-1">ตรวจสอบคำขอ</small>
+                </div>
+                <div class="stepper-line"></div>
+                <div class="text-center">
+                    <div class="stepper-circle mx-auto">✓</div>
+                    <small class="d-block mt-1">พิจารณา</small>
+                </div>
+                <div class="stepper-line"></div>
+                <div class="text-center">
+                    <div class="stepper-circle mx-auto">✓</div>
+                    <small class="d-block mt-1">ดำเนินการเสร็จสมบูรณ์</small>
+                </div>
+            </div>
+
+            <div class="bg-light border p-3 rounded mb-4">
+                <label class="fw-bold mb-2">แบบคำขอ</label>
+                <ul class="list-unstyled mb-0 ps-3">
+                    <li><a href="#" class="text-decoration-none">แบบคำขอ การขอใช้อาคารสถานที่จัดโครงการปฏิบัติธรรม</a></li>
+                    <li><a href="#" class="text-decoration-none">แบบคำขอ การขอใช้อาคารสถานที่ถ่ายภาพยนตร์</a></li>
+                    <li><label class="fw-bold mt-2 mb-1">รายละเอียดขอรับบริการ</label></li>
+                    <li><a href="#" class="text-decoration-none">1. ขั้นตอนการขอใช้อาคารสถานที่</a></li>
+                </ul>
+            </div>
+
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label fw-semibold">จังหวัด*</label>
+                    <select class="form-select" id="province" required>
+                        <option selected disabled value="">กรุณาเลือก</option>
+                        <option>กรุงเทพมหานคร</option>
+                        <option>สมุทรปราการ</option>
+                        </select>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label fw-semibold">อำเภอ/เขต*</label>
+                    <select class="form-select" id="district" required>
+                        <option selected disabled value="">กรุณาเลือก</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label fw-semibold">ตำบล/แขวง*</label>
+                    <select class="form-select" id="subdistrict" required>
+                        <option selected disabled value="">กรุณาเลือก</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label fw-semibold">รหัสไปรษณีย์</label>
+                    <input type="text" class="form-control" placeholder="รหัสไปรษณีย์">
+                </div>
+                <div class="col-12">
+                    <label class="form-label fw-semibold">รายละเอียดเพิ่มเติม(ถ้ามี)</label>
+                    <textarea class="form-control" rows="3" placeholder="ระบุรายละเอียดเพิ่มเติม..."></textarea>
+                </div>
+                <div class="col-12">
+                    <label class="form-label">บทบาทการขออนุญาต *</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="role" value="self" onclick="toggleLegal(false)" checked>
+                        <label class="form-check-label">ผู้ขอรับใบอนุญาตดำเนินการเอง</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="role" value="entity_director" onclick="toggleLegal(true)">
+                        <label class="form-check-label">กรรมการดำเนินการแทนนิติบุคคล</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="role" value="entity_proxy" onclick="toggleLegal(true)">
+                        <label class="form-check-label">ผู้รับมอบอำนาจดำเนินการแทนนิติบุคคล</label>
+                    </div>
+                </div>
+            </div>
+            <div id="legalSection" class="mt-3 p-3 bg-light rounded" style="display: none;">
+            <label class="form-label">เลขนิติบุคคล</label>
+            <div class="input-group mb-2">
+                <input type="text" class="form-control" id="taxId" placeholder="กรอกเลขนิติบุคคล">
+                <button class="btn btn-primary" onclick="showEntityData()">ค้นหา</button>
+            </div>
+            <div id="entityData" class="mt-2" style="display: none;"></div>
+
+            <div id="directorValidationSection" class="validation-panel" style="display: none;">
+                <h6 class="fw-bold mb-2">ตรวจสอบเงื่อนไขกรรมการดำเนินการแทนนิติบุคคล</h6>
+                <p class="small text-muted mb-2" id="directorValidationHint"></p>
+
+                <div id="singleDirectorCheck" style="display: none;">
+                    <button type="button" class="btn btn-sm btn-primary" onclick="validateSingleDirector()">ตรวจสอบชื่อผู้ดำเนินการ</button>
+                    <div id="singleDirectorResult" class="mt-2"></div>
+                </div>
+
+                <div id="multiDirectorCheck" style="display: none;">
+                    <div id="multiDirectorList" class="director-list-grid"></div>
+                </div>
+
+                <div id="directorStatus" class="validation-status status-pending mt-3">รอการตรวจสอบ</div>
+            </div>
+
+            <div id="entityDataISDP" style="display: none;">
+             <div class="card idsp-panel">
+        <div class="card-header">
+            เอกสารมอบอำนาจจากระบบ IDSP
+        </div>
+  
+        <div class="card-body">
+        <p class="text-muted small">รองรับเอกสารชนิด pdf, zip, png, jpg ที่มีขนาดไม่เกิน 50 MB</p>
+        <div class="card p-4 mb-4">
+            <h5>อัปโหลดเอกสาร</h5>
+            <div class="input-group mt-3">
+                <input type="file" class="form-control" id="fileInput">
+                <button class="btn btn-primary" onclick="simulateUpload()">บันทึกและตรวจสอบ</button>
+            </div>
+        </div>
+
+        <div class="card p-4">
+            <h5>รายการเอกสารดึงจาก api IDSP</h5>
+            <div id="doc-list" class="mt-3"></div>
+        </div>
+      
+
+            <div id="result-view" class="card p-5 text-center" style="display: none;">
+        <div class="success-icon">รายการที่เลือก : DOC-20230501-0001</div>
+        <h3 class="fw-bold text-success">ตรวจสอบผ่าน</h3>
+        <p class="text-muted">ตรวจสอบหนังสือมอบอำนาจเรียบร้อย</p>
+        <ul class="list-unstyled text-start bg-light p-3 rounded">
+            <li> ✅ รายการใบคำขอตรงกัน</li>
+            <li>✅ หนังสือมอบอำนาจจาก IDSP</li>
+            <li>✅ ผู้รับมอบตรงกับหนังสือมอบอำนาจ</li>
+            <li>✅ ผู้มอบอำนาจตรงกับหนังสือมอบอำนาจ</li>
+            <li>✅ ชำระอากรแสตมป์</li>
+        </ul>
+        <button class="btn btn-secondary mt-3" onclick="goBack()">ยกเลิก</button>
+    </div>
+      <div id="result-view1" class="card p-5 text-center" style="display: none;">
+        <div class="success-icon">รายการที่เลือก : DOC-20230420-0003</div>
+        <h3 class="fw-bold text-warning">ตรวจสอบไม่ผ่าน</h3>
+        <p class="text-muted">ตรวจสอบหนังสือมอบอำนาจเรียบร้อย</p>
+        <ul class="list-unstyled text-start bg-light p-3 rounded">
+            <li> ❌รายการใบคำขอไม่ตรงกัน</li>
+            <li> ❌หนังสือมอบอำนาจจาก IDSP</li>
+            <li>✅ ผู้รับมอบตรงกับหนังสือมอบอำนาจ</li>
+            <li>✅ ผู้มอบอำนาจตรงกับหนังสือมอบอำนาจ</li>
+            <li> ❌ชำระอากรแสตมป์</li>
+        </ul>
+        <button class="btn btn-secondary mt-3" onclick="goBack()">ยกเลิก</button>
+    </div>
+    </div>
+    </div>
+    </div>
+        </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            ส่วนที่ 3 : เอกสารอัปโหลด
+        </div>
+        <div class="card-body">
+        <p class="text-muted small">รองรับเอกสารชนิด pdf, zip, png, jpg ที่มีขนาดไม่เกิน 50 MB</p>
+        
+        <div class="input-group mb-3">
+            <input type="file" class="form-control" id="fileInputGeneral" multiple>
+            <button class="btn btn-outline-primary" type="button" onclick="addFile()">เพิ่มเอกสาร</button>
+        </div>
+
+        <div class="file-list-wrapper">
+            <ul id="fileList" class="list-group list-group-flush">
+                <li class="list-group-item text-muted small">ยังไม่มีเอกสารที่เลือก</li>
+            </ul>
+        </div>
+
+    </div>
+    </div>
+    
+
+    <div class="card">
+        <div class="card-body">
+            <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" id="check1" required>
+                <label class="form-check-label small" for="check1">
+                    ข้าพเจ้าขอรับรองว่าข้อมูลต่างๆ ที่ได้ให้นี้เป็นความจริงทุกประการ และได้รับเอกสารหลักฐานและเงื่อนไขที่เกี่ยวข้องกับการรับรองไว้เรียบร้อยแล้ว
+                </label>
+            </div>
+            <div class="mb-4 form-check">
+                <input type="checkbox" class="form-check-input" id="check2" required>
+                <label class="form-check-label small" for="check2">
+                    คลิกเพื่อยอมรับเงื่อนไขการให้บริการการดำเนินการทุกครั้ง
+                </label>
+            </div>
+
+            <div class="d-flex gap-3">
+                <button type="button" class="btn btn-save w-50 py-2 fw-semibold" id="submitBtn" onclick="submitForm()">บันทึก</button>
+                <button type="button" class="btn btn-back w-50 py-2 fw-semibold">ย้อนกลับ</button>
+            </div>
+            <p class="small text-muted mt-2 mb-0" id="submitHint"></p>
+        </div>
+    </div>
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    const filesArray = [];
+    let juristicData = [];
+    let authorityRules = [];
+    let selectedEntity = null;
+    let directorVerifications = [];
+    let singleDirectorPassed = null;
+    let dbdCheckPassed = null;
+    // ข้อมูลจำลอง (จำลองว่าดึงมาจาก API)
+    const docs = [
+        { id: "DOC-20230501-0001", title: "ใบขอใช้อาคารสถานที่", status: "ใช้งานได้", color: "text-success border-success" },
+        { id: "DOC-20230420-0003", title: "ลงทะเบียน sme", status: "รอดำเนินการ", color: "text-warning border-warning" }
+    ];
+    function toggleLegal(show) {
+        document.getElementById('legalSection').style.display = show ? 'block' : 'none';
+        if (!show) {
+            resetEntityState();
+            updateSubmitButtonState();
+            return;
+        }
+
+        if (selectedEntity) {
+            updateDirectorValidationUI(selectedEntity);
+        }
+        updateSubmitButtonState();
+    }
+
+    function getSelectedRole() {
+        return document.querySelector('input[name="role"]:checked')?.value || 'self';
+    }
+
+    function normalizePersonName(name) {
+        return (name || '')
+            .replace(/\s+/g, ' ')
+            .replace(/^(คุณ|นาย|นางสาว|นาง)\s*/g, '')
+            .trim();
+    }
+
+    function getActingPersonName() {
+        return normalizePersonName(document.getElementById('applicantFullName').value);
+    }
+
+    function isActingPersonOneOfDirectors() {
+        if (!selectedEntity || !selectedEntity.directors.length) return false;
+        const actingPerson = getActingPersonName();
+        return selectedEntity.directors.some((director) => normalizePersonName(director) === actingPerson);
+    }
+
+    function setDirectorStatus(type, message) {
+        const statusBox = document.getElementById('directorStatus');
+        statusBox.className = `validation-status mt-3 status-${type}`;
+        statusBox.textContent = message;
+    }
+
+    function resetEntityState() {
+        selectedEntity = null;
+        directorVerifications = [];
+        singleDirectorPassed = null;
+        document.getElementById('entityData').style.display = 'none';
+        document.getElementById('entityDataISDP').style.display = 'none';
+        document.getElementById('directorValidationSection').style.display = 'none';
+        document.getElementById('singleDirectorCheck').style.display = 'none';
+        document.getElementById('multiDirectorCheck').style.display = 'none';
+        document.getElementById('singleDirectorResult').innerHTML = '';
+        document.getElementById('multiDirectorList').innerHTML = '';
+        dbdCheckPassed = null;
+    }
+
+    function getDirectorValidationError() {
+        const role = getSelectedRole();
+        if (role !== 'entity_director') return '';
+        if (!selectedEntity) return 'กรุณาค้นหาและยืนยันข้อมูลนิติบุคคลก่อนบันทึก';
+
+        if (!isActingPersonOneOfDirectors()) {
+            return 'ผู้ดำเนินการต้องเป็น 1 ในกรรมการของนิติบุคคลเท่านั้น';
+        }
+
+        if (selectedEntity.directors.length <= 1) {
+            if (singleDirectorPassed !== true) {
+                return 'กรุณาตรวจสอบชื่อผู้ดำเนินการให้ผ่านก่อนบันทึก';
+            }
+            return '';
+        }
+
+        if (directorVerifications.length === 0) {
+            return 'กรุณาเลือกวิธีดำเนินการยืนยันกรรมการก่อนบันทึก';
+        }
+
+        // หาว่ามีกรรมการคนไหนที่เลือกให้ตรวจสอบบ้าง
+        const initiatedVerifications = directorVerifications.filter((item) => item.verificationInitiated);
+        
+        // ถ้าไม่มีใครเลือกตรวจสอบ ให้ผ่านได้ (เลือกไม่ส่งใครเลย)
+        if (initiatedVerifications.length === 0) {
+            return '';
+        }
+
+        // ถ้ามีการเลือกตรวจสอบ ต้องกดตรวจสอบ DBD และผ่านก่อนบันทึก
+        const allInitiatedPass = initiatedVerifications.every((item) => item.status === 'pass');
+        if (!allInitiatedPass) {
+            return 'กรรมการที่เลือกตรวจสอบยังยืนยันไม่เสร็จ (ทุกคนต้องผ่าน)';
+        }
+
+        if (dbdCheckPassed === null) {
+            return 'กรุณากดตรวจสอบสิทธิ์ทั้งหมดกับ DBD ก่อนบันทึก';
+        }
+        if (dbdCheckPassed === false) {
+            return 'ไม่ผ่านการตรวจสอบ DBD - กรรมการชุดนี้ไม่มีสิทธิ์ดำเนินการ';
+        }
+
+        return '';
+    }
+
+    function updateSubmitButtonState() {
+        const submitBtn = document.getElementById('submitBtn');
+        const submitHint = document.getElementById('submitHint');
+        const errorMessage = getDirectorValidationError();
+        submitBtn.disabled = Boolean(errorMessage);
+        submitHint.textContent = errorMessage;
+    }
+
+    function initDirectorVerifications(entity) {
+        directorVerifications = entity.directors.map((name) => ({
+            name,
+            verificationInitiated: false,
+            notificationSent: false,
+            otpCode: '',
+            otpVerified: false,
+            linkSent: false,
+            linkApproved: false,
+            dbdChecked: false,
+            status: 'pending',
+            message: 'รอการดำเนินการ'
+        }));
+    }
+
+    function getDirectorBadgeClass(status) {
+        if (status === 'pass') return 'director-badge-pass';
+        if (status === 'fail') return 'director-badge-fail';
+        return 'director-badge-pending';
+    }
+
+    function getDirectorStatusText(status) {
+        if (status === 'pass') return 'ผ่าน';
+        if (status === 'fail') return 'ไม่ผ่าน';
+        return 'รอดำเนินการ';
+    }
+
+    function setDirectorPersonStatus(index, status, message) {
+        if (!directorVerifications[index]) return;
+        directorVerifications[index].status = status;
+        directorVerifications[index].message = message;
+    }
+
+    function refreshOverallDirectorStatus() {
+        if (!directorVerifications.length) {
+            setDirectorStatus('pending', 'รอเลือกวิธีดำเนินการยืนยันจากกรรมการ');
+            updateSubmitButtonState();
+            return;
+        }
+
+        // ถ้าตรวจสอบ DBD แล้ว ให้แสดงผล DBD และไม่เขียนทับ
+        if (dbdCheckPassed !== null) {
+            const passedInitiatedList = directorVerifications.filter((item) => item.verificationInitiated && item.status === 'pass');
+            const nameList = passedInitiatedList.map((item) => item.name).join(', ');
+            if (dbdCheckPassed) {
+                setDirectorStatus('pass', `ผ่านการตรวจสอบ DBD - มีสิทธิ์ดำเนินการ (${nameList})`);
+            } else {
+                setDirectorStatus('fail', `ไม่ผ่านการตรวจสอบ DBD - กรรมการชุดนี้ไม่มีสิทธิ์ดำเนินการ (${nameList})`);
+            }
+            updateSubmitButtonState();
+            return;
+        }
+
+        const initiatedVerifications = directorVerifications.filter((item) => item.verificationInitiated);
+        
+        if (initiatedVerifications.length === 0) {
+            setDirectorStatus('pending', 'รอเลือกวิธีดำเนินการยืนยันจากกรรมการ');
+            updateSubmitButtonState();
+            return;
+        }
+
+        const selectedHasFail = initiatedVerifications.some((item) => item.status === 'fail');
+        const selectedAllPass = initiatedVerifications.every((item) => item.status === 'pass');
+
+        if (selectedHasFail) {
+            setDirectorStatus('fail', 'ไม่ผ่านเงื่อนไข: มีกรรมการบางรายตรวจสอบไม่ผ่าน');
+            updateSubmitButtonState();
+            return;
+        }
+
+        if (selectedAllPass) {
+            setDirectorStatus('pending', `กรุณากดตรวจสอบสิทธิ์ทั้งหมดกับ DBD (ผ่านรายการแล้ว ${initiatedVerifications.length} คน)`);
+            updateSubmitButtonState();
+            return;
+        }
+
+        const doneCount = initiatedVerifications.filter((item) => item.status === 'pass').length;
+        setDirectorStatus('pending', `กำลังดำเนินการ: ผ่านแล้ว ${doneCount}/${initiatedVerifications.length} คน`);
+        updateSubmitButtonState();
+    }
+
+    function renderMultiDirectorList() {
+        const listEl = document.getElementById('multiDirectorList');
+        const directorsHTML = directorVerifications.map((item, index) => `
+            <div class="director-item">
+                <div class="director-item-header">
+                    <div>
+                        <strong>กรรมการคนที่ ${index + 1}</strong><br>
+                        <small>${item.name}</small>
+                    </div>
+                    <span class="director-badge ${getDirectorBadgeClass(item.status)}">${getDirectorStatusText(item.status)}</span>
+                </div>
+
+                <div class="director-actions mb-2">
+                    <button type="button" class="btn btn-sm btn-outline-primary" onclick="sendDirectorNotification(${index})">2.1 ส่งแจ้งเตือน</button>
+                    <button type="button" class="btn btn-sm btn-outline-primary" onclick="sendDirectorOtp(${index})">2.2 ส่ง OTP</button>
+                    <button type="button" class="btn btn-sm btn-outline-primary" onclick="sendDirectorApprovalLink(${index})">2.3 ส่งลิงก์อนุมัติ</button>
+                </div>
+
+                <div class="director-actions">
+                    <input type="text" class="form-control form-control-sm" id="directorOtpInput-${index}" placeholder="กรอก OTP จากกรรมการ" style="max-width: 220px;">
+                    <button type="button" class="btn btn-sm btn-primary" onclick="verifyDirectorOtp(${index})">ยืนยัน OTP</button>
+                    <button type="button" class="btn btn-sm btn-primary" onclick="markDirectorLinkApproved(${index})" ${item.linkSent ? '' : 'disabled'}>รับผลอนุมัติกลับมา</button>
+                </div>
+
+                <div class="director-message">${item.message}</div>
+            </div>
+        `).join('');
+
+        listEl.innerHTML = `
+            ${directorsHTML}
+            <div class="mt-3">
+                <button type="button" class="btn btn-info w-100" onclick="checkAllDirectorsWithDBD()">ตรวจสอบสิทธิ์ทั้งหมดกับ DBD</button>
+            </div>
+        `;
+
+        refreshOverallDirectorStatus();
+    }
+
+    function updateDirectorValidationUI(entity) {
+        const section = document.getElementById('directorValidationSection');
+        const hint = document.getElementById('directorValidationHint');
+        const singleBlock = document.getElementById('singleDirectorCheck');
+        const multiBlock = document.getElementById('multiDirectorCheck');
+
+        if (getSelectedRole() !== 'entity_director') {
+            section.style.display = 'none';
+            return;
+        }
+
+        section.style.display = 'block';
+        if (entity.directors.length <= 1) {
+            hint.textContent = 'กรณีกรรมการคนเดียว: ชื่อผู้ดำเนินการต้องตรงกับชื่อกรรมการจึงจะผ่าน';
+            singleBlock.style.display = 'block';
+            multiBlock.style.display = 'none';
+            singleDirectorPassed = null;
+            setDirectorStatus('pending', 'รอตรวจสอบชื่อผู้ดำเนินการ');
+            updateSubmitButtonState();
+        } else {
+            hint.textContent = 'กรณีกรรมการหลายคน: ต้องตรวจสอบแยกเป็นรายคน โดยเลือกวิธี 2.1/2.2/2.3 ต่อกรรมการแต่ละราย';
+            singleBlock.style.display = 'none';
+            multiBlock.style.display = 'block';
+            singleDirectorPassed = null;
+            initDirectorVerifications(entity);
+            renderMultiDirectorList();
+        }
+    }
+
+    function validateSingleDirector() {
+        if (!selectedEntity || selectedEntity.directors.length !== 1) return;
+        const applicant = getActingPersonName();
+        const director = normalizePersonName(selectedEntity.directors[0]);
+        const resultBox = document.getElementById('singleDirectorResult');
+
+        if (!isActingPersonOneOfDirectors()) {
+            resultBox.innerHTML = '<div class="alert alert-danger py-2 mb-0">ไม่ผ่าน: ผู้ดำเนินการต้องเป็น 1 ในกรรมการของนิติบุคคลเท่านั้น</div>';
+            singleDirectorPassed = false;
+            setDirectorStatus('fail', 'ผู้ดำเนินการไม่ใช่กรรมการของนิติบุคคล');
+            updateSubmitButtonState();
+            return;
+        }
+
+        if (applicant === director) {
+            resultBox.innerHTML = '<div class="alert alert-success py-2 mb-0">ผ่าน: ชื่อผู้ดำเนินการตรงกับกรรมการคนเดียวของนิติบุคคล</div>';
+            singleDirectorPassed = true;
+            setDirectorStatus('pass', 'ผ่านเงื่อนไขกรรมการคนเดียว');
+        } else {
+            resultBox.innerHTML = '<div class="alert alert-danger py-2 mb-0">ไม่ผ่าน: ชื่อผู้ดำเนินการไม่ตรงกับกรรมการคนเดียวของนิติบุคคล</div>';
+            singleDirectorPassed = false;
+            setDirectorStatus('fail', 'ไม่ผ่านเงื่อนไขกรรมการคนเดียว');
+        }
+        updateSubmitButtonState();
+    }
+
+    function sendDirectorNotification(index) {
+        if (!directorVerifications[index]) return;
+        directorVerifications[index].notificationSent = true;
+        directorVerifications[index].verificationInitiated = true;
+        dbdCheckPassed = null;
+        setDirectorPersonStatus(index, 'pass', 'ส่งแจ้งเตือนแล้ว - ผ่านการตรวจสอบ');
+        renderMultiDirectorList();
+    }
+
+    function sendDirectorOtp(index) {
+        if (!directorVerifications[index]) return;
+        directorVerifications[index].verificationInitiated = true;
+        dbdCheckPassed = null;
+        const otp = String(Math.floor(100000 + Math.random() * 900000));
+        directorVerifications[index].otpCode = otp;
+        setDirectorPersonStatus(index, 'pending', 'ส่ง OTP แล้ว รอการกรอกรหัสยืนยัน');
+        renderMultiDirectorList();
+        alert(`ส่ง OTP ให้ ${directorVerifications[index].name} แล้ว (ทดสอบ: ${otp})`);
+    }
+
+    function verifyDirectorOtp(index) {
+        if (!directorVerifications[index]) return;
+        const inputEl = document.getElementById(`directorOtpInput-${index}`);
+        const inputOtp = inputEl ? inputEl.value.trim() : '';
+        if (!directorVerifications[index].otpCode) {
+            alert('กรุณากดส่ง OTP ก่อน');
+            return;
+        }
+        if (inputOtp === directorVerifications[index].otpCode) {
+            directorVerifications[index].otpVerified = true;
+            setDirectorPersonStatus(index, 'pass', 'ยืนยัน OTP สำเร็จ');
+        } else {
+            setDirectorPersonStatus(index, 'fail', 'OTP ไม่ถูกต้อง');
+        }
+        renderMultiDirectorList();
+    }
+
+    function sendDirectorApprovalLink(index) {
+        if (!directorVerifications[index]) return;
+        directorVerifications[index].verificationInitiated = true;
+        directorVerifications[index].linkSent = true;
+        dbdCheckPassed = null;
+        setDirectorPersonStatus(index, 'pending', 'ส่งลิงก์อนุมัติแล้ว รอกรรมการตอบกลับ');
+        renderMultiDirectorList();
+    }
+
+    function markDirectorLinkApproved(index) {
+        if (!directorVerifications[index] || !directorVerifications[index].linkSent) return;
+        directorVerifications[index].linkApproved = true;
+        setDirectorPersonStatus(index, 'pass', 'ได้รับผลอนุมัติกลับมาแล้ว');
+        renderMultiDirectorList();
+    }
+
+    function checkAllDirectorsWithDBD() {
+        if (!selectedEntity) return;
+
+        const passedInitiatedList = directorVerifications.filter((item) => item.verificationInitiated && item.status === 'pass');
+        if (passedInitiatedList.length === 0) {
+            alert('กรุณาทำรายการกรรมการที่เลือกให้ผ่านก่อนตรวจสอบ DBD');
+            return;
+        }
+
+        const ruleSet = authorityRules.find((item) => item.juristicId === selectedEntity.juristicId);
+        if (!ruleSet) {
+            alert('ไม่พบข้อมูล authority สำหรับนิติบุคคลนี้');
+            return;
+        }
+
+        const selectedNames = passedInitiatedList.map((item) => item.name);
+        const hasAuthority = ruleSet.allowedGroups.some((group) => isSameDirectorGroup(group, selectedNames));
+
+        passedInitiatedList.forEach((item) => {
+            item.dbdChecked = true;
+        });
+
+        const nameList = passedInitiatedList.map((item) => item.name).join(', ');
+        dbdCheckPassed = hasAuthority;
+        if (hasAuthority) {
+            setDirectorStatus('pass', `ผ่านการตรวจสอบ DBD - มีสิทธิ์ดำเนินการ (${nameList})`);
+        } else {
+            setDirectorStatus('fail', `ไม่ผ่านการตรวจสอบ DBD - กรรมการชุดนี้ไม่มีสิทธิ์ดำเนินการ (${nameList})`);
+        }
+
+        renderMultiDirectorList();
+        updateSubmitButtonState();
+    }
+
+    function isSameDirectorGroup(expectedGroup, actualGroup) {
+        const normalizedExpected = expectedGroup.map((name) => normalizePersonName(name)).sort();
+        const normalizedActual = actualGroup.map((name) => normalizePersonName(name)).sort();
+
+        if (normalizedExpected.length !== normalizedActual.length) return false;
+        return normalizedExpected.every((name, index) => name === normalizedActual[index]);
+    }
+
+    async function loadReferenceData() {
+        try {
+            const [juristicResponse, authorityResponse] = await Promise.all([
+                fetch('juristic.json'),
+                fetch('authority-rules.json')
+            ]);
+
+            if (!juristicResponse.ok) throw new Error('โหลด juristic.json ไม่สำเร็จ');
+            if (!authorityResponse.ok) throw new Error('โหลด authority-rules.json ไม่สำเร็จ');
+
+            juristicData = await juristicResponse.json();
+            authorityRules = await authorityResponse.json();
+        } catch (error) {
+            console.error(error);
+            alert('ไม่สามารถโหลดข้อมูลสำหรับตรวจสอบสิทธิ์ได้');
+        }
+    }
+
+    function showEntityData() {
+        const input = document.getElementById('taxId').value.trim();
+        const entityBox = document.getElementById('entityData');
+        const idspSection = document.getElementById('entityDataISDP');
+
+        if (!input) {
+            alert('กรุณากรอกเลขนิติบุคคล');
+            resetEntityState();
+            return;
+        }
+
+        const entity = juristicData.find((item) => item.juristicId === input);
+
+        if (!entity) {
+            alert('ไม่พบข้อมูลเลขนิติบุคคลนี้');
+            resetEntityState();
+            return;
+        }
+
+        // ตรวจสอบก่อนว่าผู้ดำเนินการเป็นกรรมการของนิติบุคคลนี้หรือไม่ (เฉพาะบทบาท entity_director)
+        const actingPerson = normalizePersonName(document.getElementById('applicantFullName').value);
+        const isDirector = entity.directors.some((d) => normalizePersonName(d) === actingPerson);
+
+        if (getSelectedRole() === 'entity_director' && !isDirector) {
+            entityBox.innerHTML = `
+                <div class="alert alert-danger">
+                    <strong>ไม่สามารถดำเนินการได้</strong><br>
+                    คุณ ${document.getElementById('applicantFullName').value.trim()} ไม่ได้เป็นกรรมการของบริษัทนี้<br>
+                    <small class="text-muted">กรรมการที่มีสิทธิ์: ${entity.directors.join(', ')}</small>
+                </div>
+            `;
+            entityBox.style.display = 'block';
+            idspSection.style.display = 'none';
+            document.getElementById('directorValidationSection').style.display = 'none';
+            selectedEntity = null;
+            updateSubmitButtonState();
+            return;
+        }
+
+        selectedEntity = entity;
+        directorVerifications = [];
+        singleDirectorPassed = null;
+        dbdCheckPassed = null;
+        document.getElementById('singleDirectorResult').innerHTML = '';
+        document.getElementById('multiDirectorList').innerHTML = '';
+
+        entityBox.innerHTML = `
+            <div class="entity-data-card">
+                <h6 class="fw-bold mb-2">ผลการค้นหานิติบุคคล</h6>
+                <p class="mb-1"><strong>บริษัท:</strong> ${entity.companyName}</p>
+                <p class="mb-1"><strong>เลขนิติบุคคล:</strong> ${entity.juristicId}</p>
+                <p class="mb-1"><strong>กรรมการ:</strong></p>
+                <ul class="entity-director-list">
+                    ${entity.directors.map((name) => `<li>${name}</li>`).join('')}
+                </ul>
+                <p class="mb-0"><strong>อำนาจกรรมการ:</strong> ${entity.authority}</p>
+            </div>
+        `;
+        entityBox.style.display = 'block';
+        idspSection.style.display = getSelectedRole() === 'entity_proxy' ? 'block' : 'none';
+        updateDirectorValidationUI(entity);
+        updateSubmitButtonState();
+    }
+
+    function addFile() {
+        const input = document.getElementById('fileInputGeneral');
+        const list = document.getElementById('fileList');
+        
+        if (input.files.length === 0) return;
+
+        // ล้างข้อความเริ่มต้น
+        if (filesArray.length === 0) list.innerHTML = '';
+
+        for (let i = 0; i < input.files.length; i++) {
+            const file = input.files[i];
+            filesArray.push(file);
+
+            const li = document.createElement('li');
+            li.className = 'list-group-item d-flex justify-content-between align-items-center';
+            li.innerHTML = `
+                <span>${file.name} <small class="text-muted">(${(file.size / 1024 / 1024).toFixed(2)} MB)</small></span>
+                <button class="btn btn-sm btn-danger" onclick="removeFile(this, ${filesArray.length - 1})">ลบ</button>
+            `;
+            list.appendChild(li);
+        }
+        input.value = ''; // เคลียร์ input
+    }
+
+    function removeFile(btn, index) {
+        btn.parentElement.remove();
+        filesArray.splice(index, 1);
+        
+        if (filesArray.length === 0) {
+            document.getElementById('fileList').innerHTML = '<li class="list-group-item text-muted small">ยังไม่มีเอกสารที่เลือก</li>';
+        }
+    }
+    function submitForm() {
+        const directorValidationError = getDirectorValidationError();
+        if (directorValidationError) {
+            alert(directorValidationError);
+            return;
+        }
+
+        // ดึงค่า checkbox มาตรวจสอบ
+        const check1 = document.getElementById('check1').checked;
+        const check2 = document.getElementById('check2').checked;
+        
+        if (!check1 || !check2) {
+            alert('กรุณายอมรับเงื่อนไขและรับรองข้อมูลก่อนดำเนินการ');
+            return;
+        }
+        alert('บันทึกข้อมูลสำเร็จ');
+        // ทำการส่งข้อมูล (AJAX หรือ Form submit ต่อไป)
+    }
+
+
+    // เรียกใช้ฟังก์ชัน
+ function loadDocs() {
+        const list = document.getElementById('doc-list');
+        list.innerHTML = docs.map(d => `
+            <div class="card doc-item p-3 mb-2 border-start border-4 ${d.status === 'ใช้งานได้' ? 'border-success' : 'border-warning'}" onclick="verifyDoc('${d.id}')">
+                <strong>${d.id}</strong><br><small>${d.title} - ${d.status}</small>
+            </div>
+        `).join('');
+    }
+
+    // 2. จำลองการอัปโหลดและเปลี่ยนหน้าไปโชว์ผลการตรวจสอบ
+    function simulateUpload() {
+        const file = document.getElementById('fileInput').files[0];
+        if(!file) return alert('กรุณาเลือกไฟล์');
+
+        // สลับการแสดงผล
+       // document.getElementById('main-view').style.display = 'none';
+        document.getElementById('result-view').style.display = 'block';
+    }
+
+    function goBack() {
+      
+        document.getElementById('result-view').style.display = 'none';
+        document.getElementById('result-view1').style.display = 'none';
+    }
+
+
+    // 3. ฟังก์ชันตรวจสอบ (เมื่อเลือกแล้ว)
+    function verifyDoc(id) {
+        const doc = docs.find(d => d.id === id);
+        
+        if(id != "DOC-20230420-0003")
+    {
+document.getElementById('result-view1').style.display = 'none';
+document.getElementById('result-view').style.display = 'block';
+    }
+    else
+    {
+        document.getElementById('result-view').style.display = 'none';
+        document.getElementById('result-view1').style.display = 'block';
+    }
+       // document.getElementById('list-view').style.display = 'none';
+        
+    }
+   
+    loadDocs();
+    loadReferenceData();
+    updateSubmitButtonState();
+
+</script>
+
+</body>
+</html>
