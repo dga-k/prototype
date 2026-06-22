@@ -564,6 +564,10 @@
             return;
         }
 
+        const role = getSelectedRole();
+        const idspSection = document.getElementById('entityDataISDP');
+        idspSection.style.display = role === 'entity_proxy' ? 'block' : 'none';
+
         if (selectedEntity) {
             updateDirectorValidationUI(selectedEntity);
         }
